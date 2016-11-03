@@ -1,22 +1,24 @@
 runtime bundle/vim-pathogen/autoload/pathogen.vim
 execute pathogen#infect()
-syntax on
+syntax enable
 filetype plugin indent on
 set encoding=utf-8
 set number
 set ruler
-colorscheme molokai
+set background=light
+let g:solarized_termcolors=256
+colorscheme solarized
 set tabstop=2 shiftwidth=2 expandtab
 
 inoremap jk <ESC>
 map <Space> <leader>
 nnoremap <C-n> :NERDTreeToggle<CR>
-nnoremap <leader>s :w<CR>
+nnoremap <leader>w :w<CR>
 nnoremap <leader>q :q<CR>
 nnoremap <leader>t :tabnew<CR>
 nnoremap <leader>g :tabn<CR>
 nnoremap <leader>G :tabp<CR>
-nnoremap <leader>a :ag 
+nnoremap <leader>a :Ag 
 nnoremap <leader>k :grep! "\b<C-R><C-W>\b"<CR>:cw<CR>
 
 nnoremap <C-h> <C-w>h
