@@ -31,6 +31,7 @@ if executable('ag')
   let g:ackprg = 'ag --nogroup --nocolor --column'
   let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
   let g:ctrlp_use_caching = 0
+  let g:ag_mapping_message=0
 endif
 
 "https://danielmiessler.com/study/vim/?fb_ref=118ef0e03ab54c0d8197214328648a68-Hackernews
