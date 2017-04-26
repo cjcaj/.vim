@@ -26,7 +26,8 @@ nnoremap <leader>r :%s/<C-R><C-W>/
 nnoremap <leader>f :FlowMake<CR>
 nnoremap <leader>F :FlowToggle<CR>
 nnoremap <leader>e :! yarn eslint %<CR>
-nnoremap <leader>j :! yarn jest %<CR>
+nnoremap <leader>j :! jest %<CR>
+nnoremap <leader>J :! jest % -u<CR>
 
 nnoremap <C-h> <C-w>h
 nnoremap <C-j> <C-w>j
@@ -55,5 +56,10 @@ endif
 
 let g:flow#timeout = 2
 let g:flow#enable = 0
+
+"prettier
+autocmd FileType javascript.jsx,javascript set formatprg=prettier\ --stdin\ --parser\ flow\ --single-quote\ --trailing-comma\ es5\ --semi\ false
+"autocmd BufWritePre *.js :normal gggqG
+"autocmd BufWritePre *.js exe "normal! gggqG\<C-o>\<C-o>"
 
 "https://danielmiessler.com/study/vim/?fb_ref=118ef0e03ab54c0d8197214328648a68-Hackernews
