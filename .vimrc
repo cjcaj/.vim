@@ -6,7 +6,7 @@ set encoding=utf-8
 set number
 set ruler
 set background=light
-let g:solarized_termcolors=256
+"let g:solarized_termcolors=256
 colorscheme solarized
 set tabstop=2 shiftwidth=2 expandtab
 set laststatus=2
@@ -23,11 +23,15 @@ nnoremap <leader>G :tabp<CR>
 nnoremap <leader>a :Ag 
 nnoremap <leader>k :grep! "\b<C-R><C-W>\b"<CR>:cw<CR><Esc>
 nnoremap <leader>r :%s/<C-R><C-W>/
+"nnoremap <leader>F :FlowToggle<CR>
 nnoremap <leader>f :FlowMake<CR>
-nnoremap <leader>F :FlowToggle<CR>
+nnoremap <leader>F :FlowType<CR>
 nnoremap <leader>e :! yarn eslint %<CR>
-nnoremap <leader>j :! jest %<CR>
-nnoremap <leader>J :! jest % -u<CR>
+"nnoremap <leader>e :call ale#Lint()<CR>
+nnoremap <leader>j :! HMA_ENV=test jest %<CR>
+nnoremap <leader>J :! HMA_ENV=test jest % -u<CR>
+nnoremap <leader>y :tabnew src/config/config.local.js<CR>
+nnoremap <leader>Y :tabnew .configuration/config-local.yml<CR>
 
 nnoremap <C-h> <C-w>h
 nnoremap <C-j> <C-w>j
@@ -57,9 +61,39 @@ endif
 let g:flow#timeout = 2
 let g:flow#enable = 0
 
+let g:ale_lint_on_text_changed = 'never'
+let g:ale_lint_on_enter = 0
+let g:ale_lint_on_save = 1
+
 "prettier
 autocmd FileType javascript.jsx,javascript set formatprg=prettier\ --stdin\ --parser\ flow\ --single-quote\ --trailing-comma\ es5\ --semi\ false
 "autocmd BufWritePre *.js :normal gggqG
 "autocmd BufWritePre *.js exe "normal! gggqG\<C-o>\<C-o>"
+
+"Use locally installed flow
+let local_flow = finddir('node_modules', '.;') . '/.bin/flow'
+if matchstr(local_flow, "^\/\\w") == ''
+    let local_flow= getcwd() . "/" . local_flow
+endif
+if executable(local_flow)
+  let g:flow#flowpath = local_flow
+endif
+
+" Asynchronous Lint Engine (ALE)
+" Limit linters used for JavaScript.
+let g:ale_linters = {
+\  'javascript': ['flow', 'eslint']
+\}
+highlight clear ALEErrorSign " otherwise uses error bg color (typically red)
+highlight clear ALEWarningSign " otherwise uses error bg color (typically red)
+let g:ale_sign_error = 'X' " could use emoji
+let g:ale_sign_warning = '?' " could use emoji
+let g:ale_statusline_format = ['X %d', '? %d', '']
+" %linter% is the name of the linter that provided the message
+" %s is the error or warning message
+let g:ale_echo_msg_format = '%linter% says %s'
+" Map keys to navigate between lines with errors and warnings.
+nnoremap <leader>n :ALENextWrap<cr>
+nnoremap <leader>p :ALEPreviousWrap<cr>
 
 "https://danielmiessler.com/study/vim/?fb_ref=118ef0e03ab54c0d8197214328648a68-Hackernews
