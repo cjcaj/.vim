@@ -20,7 +20,7 @@ nnoremap <leader>q :q<CR>
 nnoremap <leader>t :tabnew<CR>
 nnoremap <leader>g :tabn<CR>
 nnoremap <leader>G :tabp<CR>
-nnoremap <leader>a :Ag 
+nnoremap <leader>a :Ack 
 nnoremap <leader>k :grep! "\b<C-R><C-W>\b"<CR>:cw<CR><Esc>
 nnoremap <leader>r :%s/<C-R><C-W>/
 "nnoremap <leader>F :FlowToggle<CR>
