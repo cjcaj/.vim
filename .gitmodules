@@ -22,18 +22,18 @@
 [submodule "bundle/vim-javascript"]
 	path = bundle/vim-javascript
 	url = https://github.com/pangloss/vim-javascript.git
-[submodule "bundle/vim-jsx"]
-	path = bundle/vim-jsx
-	url = git@github.com:mxw/vim-jsx.git
 [submodule "bundle/ale"]
 	path = bundle/ale
 	url = git@github.com:w0rp/ale.git
 [submodule "bundle/typescript-vim"]
 	path = bundle/typescript-vim
 	url = https://github.com/leafgarland/typescript-vim.git
-[submodule "bundle/vim-tsx"]
-	path = bundle/vim-tsx
-	url = git@github.com:ianks/vim-tsx.git
 [submodule "bundle/ack.vim"]
 	path = bundle/ack.vim
 	url = git@github.com:mileszs/ack.vim.git
+[submodule "bundle/vim-surround"]
+	path = bundle/vim-surround
+	url = git@github.com:tpope/vim-surround.git
+[submodule "bundle/vim-jsx-typescript"]
+	path = bundle/vim-jsx-typescript
+	url = git@github.com:peitalin/vim-jsx-typescript.git
