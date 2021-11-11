@@ -14,7 +14,7 @@ let g:jsx_ext_required = 0
 
 inoremap jk <ESC>
 map <Space> <leader>
-nnoremap <C-n> :NERDTreeToggle<CR>
+nnoremap <C-N> :NERDTreeToggle<CR>
 nnoremap <leader>w :w<CR>
 nnoremap <leader>q :q<CR>
 nnoremap <leader>t :tabnew<CR>
@@ -24,11 +24,12 @@ nnoremap <leader>a :Ack
 nnoremap <leader>k :grep! "\b<C-R><C-W>\b"<CR>:cw<CR><Esc>
 nnoremap <leader>r :%s/<C-R><C-W>/
 "nnoremap <leader>F :FlowToggle<CR>
-nnoremap <leader>f :FlowMake<CR>
+nnoremap <leader>f :ALEFix<CR>
 nnoremap <leader>F :FlowType<CR>
 nnoremap <leader>h :ALEHover<CR>
-nnoremap <leader>d ::ALEGoToDefinition<CR>
-nnoremap <leader>D ::ALEDetail<CR>
+nnoremap <leader>d :ALEGoToDefinition<CR>
+nnoremap <leader>K :ALEFindReferences<CR>
+nnoremap <leader>D :ALEDetail<CR>
 nnoremap <leader>e :! yarn eslint %<CR>
 "nnoremap <leader>e :call ale#Lint()<CR>
 nnoremap <leader>j :! npm run test %<CR>
@@ -61,12 +62,8 @@ endif
 "let g:syntastic_check_on_wq = 0
 "let g:syntastic_javascript_checkers = ['eslint']
 
-let g:flow#timeout = 2
-let g:flow#enable = 0
-
-let g:ale_lint_on_text_changed = 'never'
-let g:ale_lint_on_enter = 1
-let g:ale_lint_on_save = 1
+" let g:flow#timeout = 2
+" let g:flow#enable = 0
 
 "prettier
 autocmd FileType javascript.jsx,javascript,typescript,json set formatprg=prettier\ --stdin\ --parser\ typescript\ --single-quote\ --trailing-comma\ es5\ --semi\ false
@@ -74,20 +71,30 @@ autocmd FileType javascript.jsx,javascript,typescript,json set formatprg=prettie
 "autocmd BufWritePre *.js exe "normal! gggqG\<C-o>\<C-o>"
 
 "Use locally installed flow
-let local_flow = finddir('node_modules', '.;') . '/.bin/flow'
-if matchstr(local_flow, "^\/\\w") == ''
-    let local_flow= getcwd() . "/" . local_flow
-endif
-if executable(local_flow)
-  let g:flow#flowpath = local_flow
-endif
+" let local_flow = finddir('node_modules', '.;') . '/.bin/flow'
+" if matchstr(local_flow, "^\/\\w") == ''
+    " let local_flow= getcwd() . "/" . local_flow
+" endif
+" if executable(local_flow)
+  " let g:flow#flowpath = local_flow
+" endif
 
 " Asynchronous Lint Engine (ALE)
+let g:ale_fixers = {
+\  'map': ['prettier'],
+\  'javascript': ['prettier', 'eslint'],
+\  'typescript': ['prettier', 'eslint'],
+\}
+let g:ale_fix_on_save = 0
+
 " Limit linters used for JavaScript.
 let g:ale_linters = {
 \  'java': [],
-\  'javascript': ['flow', 'eslint', 'tslint']
+\  'javascript': ['eslint']
 \}
+let g:ale_lint_on_text_changed = 'never'
+let g:ale_lint_on_enter = 1
+let g:ale_lint_on_save = 1
 highlight clear ALEErrorSign " otherwise uses error bg color (typically red)
 highlight clear ALEWarningSign " otherwise uses error bg color (typically red)
 "let g:ale_sign_error = 'X' " could use emoji
@@ -102,6 +109,11 @@ let g:ale_sign_column_always = 1
 " %s is the error or warning message
 "let g:ale_echo_msg_format = '%linter% says %s'
 let g:ale_completion_enabled = 1
+let g:ale_completion_autoimport = 1
+set omnifunc=ale#completion#OmniFunc
+" rockyourcode.com/vim-autocomplete-with-ale/
+set completeopt=menu,menuone,preview,noselect,noinsert
+
 autocmd FileType qf setlocal wrap
 
 " Map keys to navigate between lines with errors and warnings.
