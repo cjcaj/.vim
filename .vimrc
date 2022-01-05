@@ -10,6 +10,21 @@ set background=light
 colorscheme solarized
 set tabstop=2 shiftwidth=2 expandtab
 set laststatus=2
+set wildmenu " when opening a file with e.g. :e ~/.vim<TAB> there is a graphical menu of all the matches
+
+" Disable backups and swap files
+set nobackup
+set nowritebackup
+set noswapfile
+
+" set ignorecase " Ignore case when searching
+set smartcase  " When searching try to be smart about cases
+set nohlsearch " Don't highlight search term
+set incsearch  " Jumping search
+
+" Delete characters outside of insert area
+set backspace=indent,eol,start
+
 let g:jsx_ext_required = 0
 
 inoremap jk <ESC>
